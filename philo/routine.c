@@ -6,7 +6,7 @@
 /*   By: dinoguei <dinoguei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:19:53 by dinoguei          #+#    #+#             */
-/*   Updated: 2023/07/11 16:18:45 by dinoguei         ###   ########.fr       */
+/*   Updated: 2023/07/25 12:57:06 by dinoguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*routine(void *arg)
 		if (philo->id % 2 != 0)
 		{
 			usleep((philo->main->time_eat / 25) * 1000);
-			set_last_eat_time(philo);
+			check_if_first(philo);
 		}
 		if (eat(philo) == 0)
 			break ;
@@ -38,6 +38,15 @@ void	*routine(void *arg)
 			break ;
 	}
 	return (NULL);
+}
+
+void	check_if_first(t_philo *philo)
+{
+	if (philo->first_routine == false)
+	{
+		set_last_eat_time(philo);
+		philo->first_routine = true;
+	}
 }
 
 void	*check_full(void *arg)

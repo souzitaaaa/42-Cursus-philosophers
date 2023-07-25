@@ -6,7 +6,7 @@
 /*   By: dinoguei <dinoguei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 18:27:21 by dinoguei          #+#    #+#             */
-/*   Updated: 2023/07/11 16:15:19 by dinoguei         ###   ########.fr       */
+/*   Updated: 2023/07/25 12:57:30 by dinoguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_philo
 	int				left_chopstick;
 	int				times_eaten;
 	long int		time_last_eat;
+	bool			first_routine;
 	pthread_mutex_t	*right_chop_mut;
 	pthread_mutex_t	*left_chop_mut;
 	pthread_mutex_t	state_mut;
@@ -100,6 +101,7 @@ routine.c
 void		*routine(void *arg);
 void		*check_full(void *arg);
 void		*check_dead(void *arg);
+void		check_if_first(t_philo *philo);
 /*
 eat.c
 */
