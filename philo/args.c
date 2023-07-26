@@ -6,7 +6,7 @@
 /*   By: dinoguei <dinoguei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 16:31:53 by dinoguei          #+#    #+#             */
-/*   Updated: 2023/07/11 15:40:25 by dinoguei         ###   ########.fr       */
+/*   Updated: 2023/07/26 14:30:32 by dinoguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,17 @@ bool	check_numerical(char **str)
 	return (false);
 }
 
-void	check_arg(int argc, char **argv)
+int	check_arg(int argc, char **argv)
 {
 	if (argc != 5 && argc != 6)
 	{
 		printf("Invalid number of arguments\n");
-		exit (EXIT_FAILURE);
+		return (1);
 	}
 	if (check_numerical(argv))
 	{
 		printf("Arguments not numerical or negative number\n");
-		exit (EXIT_FAILURE);
+		return (1);
 	}
+	return (0);
 }

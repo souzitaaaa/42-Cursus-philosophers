@@ -20,17 +20,12 @@ void	start_threads(t_main *main)
 	main->time_started = gettime();
 	while (i < main->n_philos)
 	{
-		if (pthread_create(&main->thread[i], NULL, &routine, &main->philo[i]))
-			exit(1);
+		pthread_create(&main->thread[i], NULL, &routine, &main->philo[i]);
 		i++;
 	}
-	if (pthread_create(&main->check_dead, NULL, &check_dead, main))
-		exit(1);
+	pthread_create(&main->check_dead, NULL, &check_dead, main);
 	if (main->must_eat == true)
-	{
-		if (pthread_create(&main->check_full, NULL, &check_full, main))
-			exit(1);
-	}
+		pthread_create(&main->check_full, NULL, &check_full, main);
 }
 
 void	join_threads(t_main *main)
@@ -40,13 +35,10 @@ void	join_threads(t_main *main)
 	i = 0;
 	while (i < main->n_philos)
 	{
-		if (pthread_join(main->thread[i], NULL) != 0)
-			exit(1);
+		pthread_join(main->thread[i], NULL);
 		i++;
 	}
-	if (pthread_join(main->check_dead, NULL) != 0)
-		exit(1);
-	if (main->must_eat == true
-		&& pthread_join(main->check_full, NULL) != 0)
-		exit(1);
+	pthread_join(main->check_dead, NULL);
+	if (main->must_eat == true)
+		pthread_join(main->check_full, NULL);
 }

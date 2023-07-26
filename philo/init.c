@@ -6,7 +6,7 @@
 /*   By: dinoguei <dinoguei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 15:17:26 by dinoguei          #+#    #+#             */
-/*   Updated: 2023/07/11 15:42:40 by dinoguei         ###   ########.fr       */
+/*   Updated: 2023/07/26 14:38:53 by dinoguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	init_philo(t_main *main)
 		pthread_mutex_init(&main->philo[i].state_mut, NULL);
 		pthread_mutex_init(&main->philo[i].times_eaten_mut, NULL);
 		set_last_eat_time(&main->philo[i]);
+		main->philo[i].first_routine = false;
 		times++;
 		i++;
 	}
@@ -69,13 +70,20 @@ void	init_mallocs(t_main *main)
 {
 	main->philo = malloc(sizeof(t_philo) * main->n_philos);
 	if (!main->philo)
-		exit(1);
+		return ;
 	main->fork = malloc(sizeof(pthread_mutex_t) * main->n_philos);
 	if (!main->fork)
-		exit(1);
+	{
+		free (main->philo);
+		return ;
+	}
 	main->thread = malloc(sizeof(pthread_t) * main->n_philos);
 	if (!main->thread)
-		exit(1);
+	{
+		free (main->philo);
+		free (main->fork);
+		return ;
+	}
 }
 
 void	init_mutexes(t_main *main)
@@ -86,7 +94,7 @@ void	init_mutexes(t_main *main)
 	pthread_mutex_init(&main->running_mut, NULL);
 }
 
-void	init_struct(char **argv, t_main *main)
+int	init_struct(char **argv, t_main *main)
 {
 	main->n_philos = ft_atoi(argv[1]);
 	main->time_die = ft_atoi(argv[2]);
@@ -102,12 +110,12 @@ void	init_struct(char **argv, t_main *main)
 		main->times_must_eat = -1;
 		main->must_eat = false;
 	}
-	if (main->times_must_eat == 0)
-	{
-		printf("Philosophers need to eat at least one time\n");
-		exit(EXIT_FAILURE);
-	}
+	if (main->times_must_eat == 0 || main->n_philos <= 0
+		|| main->time_die <= 0 || main->time_eat <= 0
+		|| main->time_sleep <= 0)
+		return (1);
 	main->running = true;
 	init_mallocs(main);
 	init_mutexes(main);
+	return (0);
 }

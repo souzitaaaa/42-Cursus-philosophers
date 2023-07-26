@@ -6,7 +6,7 @@
 /*   By: dinoguei <dinoguei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 18:33:18 by dinoguei          #+#    #+#             */
-/*   Updated: 2023/07/11 15:51:39 by dinoguei         ###   ########.fr       */
+/*   Updated: 2023/07/26 14:34:02 by dinoguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,10 @@ int	main(int argc, char **argv)
 {
 	t_main	main;
 
-	check_arg(argc, argv);
-	init_struct(argv, &main);
+	if (check_arg(argc, argv) == 1)
+		return (0);
+	if (init_struct(argv, &main) == 1)
+		return (0);
 	init_philo(&main);
 	init_forks(&main);
 	start_threads(&main);

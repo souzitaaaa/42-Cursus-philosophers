@@ -6,7 +6,7 @@
 /*   By: dinoguei <dinoguei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 18:27:21 by dinoguei          #+#    #+#             */
-/*   Updated: 2023/07/25 12:57:30 by dinoguei         ###   ########.fr       */
+/*   Updated: 2023/07/26 14:34:28 by dinoguei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,11 @@ args.c
 */
 bool		check_num(int digit);
 bool		check_numerical(char **str);
-void		check_arg(int argc, char **argv);
+int			check_arg(int argc, char **argv);
 /*
 init.c
 */
-void		init_struct(char **argv, t_main *philo);
+int			init_struct(char **argv, t_main *philo);
 void		init_mutexes(t_main *philo);
 void		init_mallocs(t_main *philo);
 void		init_philo(t_main *philo);
